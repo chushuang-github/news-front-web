@@ -1,4 +1,17 @@
-* {
-  margin: 0;
-  padding: 0;
+@import '~antd/dist/antd.css';
+#root, .ant-layout {
+  height: 100%;
+  width: 100%;
+}
+// 设置滚动条样式
+::-webkit-scrollbar {
+  width:5px;
+  height:5px;
+  position:absolute;
+}
+::-webkit-scrollbar-thumb {
+  background-color:#1890ff
+}
+::-webkit-scrollbar-track {
+  background-color:#ddd;
 }
