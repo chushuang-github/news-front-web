@@ -6,7 +6,7 @@ import axios from 'axios'
 export default function RoleList() {
   const [dataSource, setDataSource] = useState([])
   useEffect(() => {
-    axios.get('http://localhost:5000/rights?_embed=children').then(res => {
+    axios.get('/rights?_embed=children').then(res => {
       res.data.forEach(item => {
         if(item.children?.length === 0) {
           item.children = null
@@ -27,13 +27,13 @@ export default function RoleList() {
   }
   const deleteMethod = (record) => {
     if(record.grade === 2) {
-      axios.delete(`http://localhost:5000/children/${record.id}`).then(res => {
+      axios.delete(`/children/${record.id}`).then(res => {
         let list = dataSource.filter(item => item.id === record.rightId)
         list[0].children = list[0].children.filter(item => item.id !== record.id)
         setDataSource([...dataSource])
       })
     }else {
-      axios.delete(`http://localhost:5000/rights/${record.id}`).then(res => {
+      axios.delete(`/rights/${record.id}`).then(res => {
         setDataSource(dataSource.filter(item => item.id !== record.id))
       })
     }
@@ -43,9 +43,9 @@ export default function RoleList() {
     record.pagepermisson = checked ? 1 : 0
     setDataSource([...dataSource])
     if(record.grade === 1) {
-      axios.patch(`http://localhost:5000/rights/${record.id}`, { pagepermisson: checked ? 1 : 0 })
+      axios.patch(`/rights/${record.id}`, { pagepermisson: checked ? 1 : 0 })
     }else {
-      axios.patch(`http://localhost:5000/children/${record.id}`, { pagepermisson: checked ? 1 : 0 })
+      axios.patch(`/children/${record.id}`, { pagepermisson: checked ? 1 : 0 })
     }
   }
   const columns = [

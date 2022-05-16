@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { Layout, Menu, Dropdown, Avatar } from 'antd'
 import {
   MenuUnfoldOutlined,
@@ -8,11 +9,19 @@ import {
 
 const { Header } = Layout
 
-export default function TopHeader(props) {
+function TopHeader(props) {
+  const user = JSON.parse(localStorage.getItem('token'))
+
+  // 退出登录
+  const logout = () => {
+    localStorage.removeItem('token')
+    props.history.replace('/login')
+  }
+
   const menu = (
     <Menu>
-      <Menu.Item>超级管理员</Menu.Item>
-      <Menu.Item danger>退出登录</Menu.Item>
+      <Menu.Item>{user.role.roleName}</Menu.Item>
+      <Menu.Item danger onClick={() => logout()}>退出登录</Menu.Item>
     </Menu>
   )
   return (
@@ -23,7 +32,9 @@ export default function TopHeader(props) {
         onClick: props.toggle
       })}
       <div style={{ float: "right", marginRight: "25px" }}>
-        <span style={{ marginRight: "10px" }}>欢迎admin回来</span>
+        <span style={{ marginRight: "10px" }}>
+          欢迎<span style={{ color: '#1890ff', margin: '0 4px' }}>{user.username}</span>回来
+        </span>
         <Dropdown overlay={menu}>
           <Avatar size={30} icon={<UserOutlined />} />  
         </Dropdown>
@@ -31,3 +42,4 @@ export default function TopHeader(props) {
     </Header>
   )
 }
+export default withRouter(TopHeader)

@@ -3,6 +3,27 @@ import { Form, Input, Select } from 'antd'
 const { Option } = Select
 
 export default React.forwardRef((props, ref) => {
+  const { roleId, region } = JSON.parse(localStorage.getItem('token'))
+  const checkRegionDisabled = (item) => {
+    // roleId===1，表示该账号为超级管理员
+    if(roleId === 1) return false
+    // 更新用户信息
+    if(props.isUpdate) {
+      return true
+    }else {
+      return region === item.value ? false : true
+    }
+  }
+  const checkRoleDisabled = (item) => {
+    // roleId===1，表示该账号为超级管理员
+    if(roleId === 1) return false
+    // 更新用户信息
+    if(props.isUpdate) {
+      return true
+    }else {
+      return item.id === 3 ? false : true
+    }
+  }
   return (
     <Form
       ref={ref}
@@ -38,7 +59,13 @@ export default React.forwardRef((props, ref) => {
         <Select disabled={props.isDisabled}>
           {
             props.regions.map(item => {
-              return <Option key={item.id} value={item.value}>{item.title}</Option>
+              return (
+                <Option 
+                  key={item.id} 
+                  value={item.value}
+                  disabled={checkRegionDisabled(item)}
+                >{item.title}</Option>
+              )
             })
           }
         </Select>
@@ -60,7 +87,13 @@ export default React.forwardRef((props, ref) => {
         }}>
           {
             props.roles.map(item => {
-              return <Option key={item.id} value={item.id}>{item.roleName}</Option>
+              return (
+                <Option 
+                  key={item.id} 
+                  value={item.id}
+                  disabled={checkRoleDisabled(item)}
+                >{item.roleName}</Option>
+              )
             })
           }
         </Select>

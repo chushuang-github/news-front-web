@@ -16,11 +16,10 @@ export default function UserList() {
   const updateFormRef = useRef(null)
 
   useEffect(() => {
-    getData()
-    axios.get('http://localhost:5000/regions').then(res => {
+    axios.get('/regions').then(res => {
       setRegions(res.data)
     })
-    axios.get('http://localhost:5000/roles').then(res => {
+    axios.get('/roles').then(res => {
       setRoles(res.data)
     })
   }, [])
@@ -36,11 +35,21 @@ export default function UserList() {
   }
 
   // 获取表格数据
+  const { roleId, region, username } = JSON.parse(localStorage.getItem('token'))
   const getData = () => {
-    axios.get('http://localhost:5000/users?_expand=role').then(res => {
-      setDataSource(res.data)
+    axios.get('/users?_expand=role').then(res => {
+      const list = res.data
+      const filterList = [
+        ...list.filter(item => item.username === username),
+        ...list.filter(item => item.region === region && item.roleId === 3)
+      ]
+      setDataSource(roleId === 1 ? list : filterList)
     })
   }
+  useEffect(() => {
+    getData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // 删除确认
   const confirm = (record) => {
@@ -54,13 +63,13 @@ export default function UserList() {
   }
   const deleteMethod = (record) => {
     setDataSource(dataSource.filter(item => item.id !== record.id))
-    axios.delete(`http://localhost:5000/users/${record.id}`)
+    axios.delete(`/users/${record.id}`)
   }
   // Switch发生变化
   const changeSwitch = (record) => {
     record.roleState = !record.roleState
     setDataSource([...dataSource])
-    axios.patch(`http://localhost:5000/users/${record.id}`, { roleState: record.roleState })
+    axios.patch(`/users/${record.id}`, { roleState: record.roleState })
   }
 
   const columns = [
@@ -140,7 +149,7 @@ export default function UserList() {
         roleState: true,
         default: false
       }
-      axios.post('http://localhost:5000/users', value).then(res => {
+      axios.post('/users', value).then(res => {
         getData()
         setIsAddVisible(false)
       })
@@ -151,7 +160,7 @@ export default function UserList() {
   // 更新用户信息
   const updateUserFn = () => {
     updateFormRef.current.validateFields().then(res => {
-      axios.patch(`http://localhost:5000/users/${updateRecord.id}`, res).then(res => {
+      axios.patch(`/users/${updateRecord.id}`, res).then(res => {
         getData()
         setIsUpdateVisible(false)
       })
@@ -202,7 +211,8 @@ export default function UserList() {
           changeDisabledState={changeDisabledState}
           ref={updateFormRef} 
           regions={regions} 
-          roles={roles} 
+          roles={roles}
+          isUpdate={true}
         />
       </Modal>
     </div>

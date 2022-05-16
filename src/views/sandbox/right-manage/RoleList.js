@@ -10,10 +10,10 @@ export default function RoleList() {
   const [currentRights, setCurrentRights] = useState([])
   const [currentId, setCurrentId] = useState(0)
   useEffect(() => {
-    axios.get('http://localhost:5000/roles').then(res => {
+    axios.get('/roles').then(res => {
       setDataSource(res.data)
     })
-    axios.get('http://localhost:5000/rights?_embed=children').then(res => {
+    axios.get('/rights?_embed=children').then(res => {
       setTreeData(res.data)
     })
   }, [])
@@ -30,7 +30,7 @@ export default function RoleList() {
   // 删除
   const deleteMethod = (record) => {
     setDataSource(dataSource.filter(item => item.id !== record.id))
-    axios.delete(`http://localhost:5000/roles/${record.id}`)
+    axios.delete(`/roles/${record.id}`)
   }
 
   // 弹窗确认
@@ -42,7 +42,7 @@ export default function RoleList() {
       }
       return item
     }))
-    axios.patch(`http://localhost:5000/roles/${currentId}`, { rights: currentRights })
+    axios.patch(`/roles/${currentId}`, { rights: currentRights })
   }
   // 弹窗取消
   const handleCancel = () => {

@@ -1,0 +1,20 @@
+.login-content {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 300px;
+  padding: 20px;
+}
+.login-title {
+  text-align: center;
+  line-height: 80px;
+  font-size: 30px;
+  color: #fff;
+  user-select: none;
+}
+.login-button {
+  width: 100%;
+}
