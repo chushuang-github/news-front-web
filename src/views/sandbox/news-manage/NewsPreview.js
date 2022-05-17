@@ -23,12 +23,14 @@ export default function NewsPreview() {
     '未通过审核'
   ]
   // 发布状态
+  // 刚写完的新闻是未发布，审核通过之后就是待发布
   const publishStateArr = [
     '未发布',
     '待发布',
-    '已上线',
+    '已发布',
     '已下线'
   ]
+  const colorList = ['black', 'orange', 'green', 'red']
 
   return (
     <div>
@@ -49,10 +51,10 @@ export default function NewsPreview() {
             {newsInfo.region}
           </Descriptions.Item>
           <Descriptions.Item label="审核状态">
-            <span style={{color: 'red'}}>{auditStateArr[newsInfo.auditState]}</span>
+            <span style={{color: colorList[newsInfo.auditState]}}>{auditStateArr[newsInfo.auditState]}</span>
           </Descriptions.Item>
           <Descriptions.Item label="发布状态">
-            <span style={{color: 'red'}}>{publishStateArr[newsInfo.publishState]}</span>
+            <span style={{color: colorList[newsInfo.publishState]}}>{publishStateArr[newsInfo.publishState]}</span>
           </Descriptions.Item>
           <Descriptions.Item label="访问数量">
             <span style={{color: 'blue'}}>{newsInfo.view}</span>
