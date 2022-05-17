@@ -17,7 +17,7 @@ export default function NewRouter() {
 
   // 路由是否有展示的权限
   const checkRoute = (item) => {
-    return componentList[item.key] && item.pagepermisson === 1
+    return componentList[item.key] && (item.pagepermisson === 1 || item.routepermisson === 1)
   }
   // 用户是否有展示该路由的权限
   const { role: { rights } } = JSON.parse(localStorage.getItem('token'))

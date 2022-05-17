@@ -6,7 +6,7 @@ import axios from 'axios'
 const { Step } = Steps
 const { Option } = Select
 
-export default function NewsAdd(props) {
+export default function NewsUpdate(props) {
   const [currentStep, setCurrentStep] = useState(0)
   const [categoryList, setCategoryList] = useState([])
   const [formInfo, setFormInfo] = useState({})
@@ -18,6 +18,16 @@ export default function NewsAdd(props) {
       setCategoryList(res.data)
     })
   }, [])
+  useEffect(() => {
+    axios.get(`/news/${props.match.params.id}?_expand=category&_expand=role`).then(res => {
+      const { title, categoryId, content } = res.data
+      newsRef.current.setFieldsValue({
+        title,
+        categoryId,
+      })
+      setContent(content)
+    })
+  }, [props.match.params.id])
 
   // 上一步
   const prev = () => {
@@ -43,21 +53,12 @@ export default function NewsAdd(props) {
     setContent(value)
   }
   // 保存草稿箱和提交审核
-  const { region, username, roleId } = JSON.parse(localStorage.getItem('token'))
   // auditState：0草稿箱；1待审核；2审核通过；3审核被驳回
   const handleSave = (auditState) => {
-    axios.post('/news', {
+    axios.patch(`/news/${props.match.params.id}`, {
       ...formInfo,
       content,
-      region: region ? region : '全球',
-      author: username,
-      roleId,
       auditState,
-      publishState: 0,
-      createTime: Date.now(),
-      star: 0,
-      view: 0,
-      // publishTime: 0
     }).then(res => {
       notification.info({
         message: '通知',
@@ -70,7 +71,10 @@ export default function NewsAdd(props) {
 
   return (
     <div>
-      <PageHeader title="撰写新闻" />
+      <PageHeader 
+        title="更新新闻"
+        onBack={() => props.history.goBack()} 
+      />
 
       <Steps current={currentStep}>
         <Step title="基本信息" description="新闻标题，新闻分类" />
@@ -109,7 +113,7 @@ export default function NewsAdd(props) {
         </div>
 
         <div className={currentStep === 1 ? '' : 'hidden'}>
-          <NewsEditor getContent={getContent} />
+          <NewsEditor getContent={getContent} content={content} />
         </div>
 
         <div className={currentStep === 2 ? '' : 'hidden'}>

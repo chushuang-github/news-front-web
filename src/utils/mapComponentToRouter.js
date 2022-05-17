@@ -4,6 +4,8 @@ import RoleList from '../views/sandbox/right-manage/RoleList'
 import RightList from '../views/sandbox/right-manage/RightList'
 import NewsAdd from '../views/sandbox/news-manage/NewsAdd'
 import NewsDraft from '../views/sandbox/news-manage/NewsDraft'
+import NewsPreview from '../views/sandbox/news-manage/NewsPreview'
+import NewsUpdate from '../views/sandbox/news-manage/NewsUpdate'
 import NewsCategory from '../views/sandbox/news-manage/NewsCategory'
 import Audit from '../views/sandbox/audit-manage/Audit'
 import AuditList from '../views/sandbox/audit-manage/AuditList'
@@ -18,6 +20,8 @@ const componentList = {
   "/right-manage/right/list": RightList,
   "/news-manage/add": NewsAdd,
   "/news-manage/draft": NewsDraft,
+  "/news-manage/preview/:id": NewsPreview,
+  "/news-manage/update/:id": NewsUpdate,
   "/news-manage/category": NewsCategory,
   "/audit-manage/audit": Audit,
   "/audit-manage/list": AuditList,
