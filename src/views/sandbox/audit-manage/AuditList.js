@@ -16,7 +16,7 @@ export default function AuditList(props) {
   // 发布
   const publish = (record) => {
     setDataSource(dataSource.filter(item => item.id !== record.id))
-    axios.patch(`/news/${record.id}`, { publishState: 2 }).then(res => {
+    axios.patch(`/news/${record.id}`, { publishState: 2, publishTime: Date.now() }).then(res => {
       notification.info({
         message: '通知',
         description: '您可以去发布管理/已发布中查看您的新闻',
