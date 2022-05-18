@@ -4,7 +4,7 @@ import {
   DeleteOutlined, 
   EditOutlined, 
   ExclamationCircleOutlined, 
-  VerticalAlignTopOutlined 
+  VerticalAlignTopOutlined
 } from '@ant-design/icons'
 import axios from 'axios'
 

@@ -34,6 +34,10 @@ function TopHeader(props) {
         onClick: props.collapsedAction
       })}
       <div style={{ float: "right", marginRight: "25px" }}>
+        <span 
+          style={{ color: 'red', marginRight: '20px', cursor: 'pointer' }}
+          onClick={() => props.history.push('/news')}
+        >文章查看</span>
         <span style={{ marginRight: "10px" }}>
           欢迎<span style={{ color: '#1890ff', margin: '0 4px' }}>{user.username}</span>回来
         </span>
