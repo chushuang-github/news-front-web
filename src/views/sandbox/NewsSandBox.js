@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import SideMenu from '../../components/sandbox/SideMenu'
 import TopHeader from '../../components/sandbox/TopHeader'
 import NewRouter from '../../components/sandbox/NewRouter'
@@ -16,15 +16,11 @@ export default function NewsSandBox() {
   useEffect(() => {
     Nprogress.done()
   })
-  const [collapsed, setCollapsed] = useState(false)
   return (
     <Layout>
-      <SideMenu collapsed={collapsed}></SideMenu>
+      <SideMenu></SideMenu>
       <Layout>
-        <TopHeader 
-          collapsed={collapsed} 
-          toggle={() => setCollapsed(!collapsed)}
-        ></TopHeader>
+        <TopHeader />
         <Content 
           style={{
             margin: '24px 16px',

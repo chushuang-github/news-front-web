@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { Layout, Menu } from 'antd'
+import { connect } from 'react-redux'
 import iconList from '../../utils/mapIconToRouter'
 
 const { Sider } = Layout
@@ -69,4 +70,9 @@ function SideMenu(props) {
     </Sider>
   )
 }
-export default withRouter(SideMenu)
+const mapStateToProps = (state) => {
+  return {
+    collapsed: state.collapsedReducer.collapsed
+  }
+}
+export default connect(mapStateToProps, null)(withRouter(SideMenu))

@@ -1,6 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Layout, Menu, Dropdown, Avatar } from 'antd'
+import { collapsedAction } from '../../redux/action-creator'
+import { connect } from 'react-redux'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -29,7 +31,7 @@ function TopHeader(props) {
       {React.createElement(
         props.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: 'trigger',
-        onClick: props.toggle
+        onClick: props.collapsedAction
       })}
       <div style={{ float: "right", marginRight: "25px" }}>
         <span style={{ marginRight: "10px" }}>
@@ -42,4 +44,10 @@ function TopHeader(props) {
     </Header>
   )
 }
-export default withRouter(TopHeader)
+const mapStateToProps = (state) => {
+  return {
+    collapsed: state.collapsedReducer.collapsed
+  }
+}
+// mapDispatchToProps函数可以省略为一个对象(简写模式)
+export default connect(mapStateToProps, { collapsedAction })(withRouter(TopHeader))
